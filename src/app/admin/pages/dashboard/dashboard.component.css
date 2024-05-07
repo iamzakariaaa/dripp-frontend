@@ -1,0 +1,18 @@
+.dashboard{
+    display: block;
+    padding: 5px;
+}
+
+.cards{
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+.charts {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-top: 10px ; 
+}

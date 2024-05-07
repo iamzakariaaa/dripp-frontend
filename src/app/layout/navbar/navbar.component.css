@@ -1,0 +1,88 @@
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1a2836;
+  color: #ffffff;
+}
+
+.brand-name {
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links a {
+  text-decoration: none;
+  color: #ffffff;
+  margin: 0 10px;
+}
+.user{
+  cursor: pointer;
+}
+.user-img, .cart-img {
+  width: 30px; 
+  height: 30px; 
+  margin: 5px 8px;
+}
+
+.login-link{
+  text-decoration: none;
+  color: #ffffff;
+}
+.cart-link {
+  position: relative; 
+}
+
+.cart-count {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  bottom: 25px;
+  right: -5px;
+}
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown li {
+  margin-bottom: 10px;
+}
+
+.dropdown li:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown a {
+  color: #333333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.dropdown a:hover {
+  color: #007bff;
+}

@@ -1,0 +1,121 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.table-container{
+    flex: 1;
+    padding: 10px;
+    font-size: small;
+}
+
+table {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+table th,
+table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+.pagination {
+    margin-top: 10px;
+  }
+  
+  .pagination button {
+    margin-right: 5px;
+  }
+
+  .receipt {
+    position: relative;
+    width: 500px;
+    border: 1px solid #ccc;
+    font-weight: 400;
+    padding: 20px;
+    margin-top: 65px;
+    background-color: #f9f9f9;
+    font-size: 15px;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+  }
+  .receipt p{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .receipt h2 {
+    font-size: 20px;
+    font-weight: 400;
+    margin:0;
+    
+  }
+  .order-info{
+    margin:0;
+    color: #565656;
+    font-size: small;
+  }
+  .receipt-details{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: small;
+  } 
+  .receipt-items {
+    margin-top: 10px;
+  }
+  .receipt-items h2{
+    margin: 10px 0 10px 0;
+    
+  }
+  .receipt-items table {
+    width: 100%;
+    border-collapse: collapse;
+    font-weight:400;
+    font-size: small;
+  }
+  
+  .receipt-items th,
+  .receipt-items td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  .receipt-items td:last-child{
+    text-align: right;
+  }
+  .receipt-items th:last-child{
+    text-align: right;
+  }
+  .receipt-items td:nth-child(2){
+    text-align: center;
+  }
+  .receipt-items th:nth-child(2){
+    text-align: center;
+  }
+  .receipt-items th {
+    background-color: #f2f2f2;
+  }
+  
+  .total-amount {
+    margin-top: 10px;
+    text-align:right ;
+  }
+  
+  .print-btn {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+  }

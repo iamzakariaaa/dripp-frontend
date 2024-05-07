@@ -1,0 +1,77 @@
+<div class="container">
+    <div id="product-table" class="table-container">
+      <h2>Products</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>image</th>
+            <th>name</th>
+            <th>description</th>
+            <th>price</th>
+            <th>category</th>
+            <th>units in Stock</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of getPaginatedProducts()">
+            <td>{{ product.id }}</td>
+            <td><img id="product-image" [src]="productImageUrl" alt="Product Image"></td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.units }}</td>
+            <td>
+                 <!-- Edit button -->
+                <button (click)="updateProduct(product)">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <!-- Delete button -->
+                <button (click)="deleteProduct(product.id)">
+                  <i class="fa fa-trash"></i>
+                </button>            
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button (click)="prevPage()">Previous</button>
+        <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)">{{ page }}</button>
+        <button (click)="nextPage()">Next</button>
+      </div>
+    </div>
+    <div id="product-form" class="form-container">
+      <h3>New Product</h3>
+      <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" formControlName="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" formControlName="price">
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <input type="text" id="category" formControlName="category">
+        </div>
+        <div class="form-group">
+          <label for="units">Units in Stock:</label>
+          <input type="number" id="units" formControlName="units">
+        </div>
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <input type="file" id="image" formControlName="image" (change)="onFileSelected($event)">
+        </div>
+        <button type="submit" [disabled]="productForm.invalid">Add Product</button>
+      </form>      
+  </div>
+  
+  </div>
+  

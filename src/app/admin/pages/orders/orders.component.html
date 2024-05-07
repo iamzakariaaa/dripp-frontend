@@ -1,0 +1,83 @@
+<div class="container">
+    <div id="order-table" class="table-container">
+        <h2>Orders Table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>order date</th>
+              <th>shipping</th>
+              <th>phone</th>
+              <th>status</th>
+              <th>total</th>
+              <th>details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of getPaginatedOrders()"> 
+                <td> {{order.id}} </td>
+                <td> {{order.createdAt | date}} </td>
+                <td> {{order.shippingAddress}} </td>
+                <td> {{order.phoneNumber}} </td>
+                <td> {{order.status}} </td>
+                <td> {{order.totalAmount}} </td>
+              <td>
+                <button (click)="showReceipt(order)">view receipt</button>           
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <button (click)="prevPage()">Previous</button>
+          <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)">{{ page }}</button>
+          <button (click)="nextPage()">Next</button>
+        </div>
+      </div>
+      <div class="receipt" *ngIf="selectedOrder">
+        <h2>Order details</h2>
+        <div class="order-info">
+          <p>Order N°: {{ selectedOrder.id }}</p>
+          <p>Orderd At: {{ selectedOrder.createdAt | date }}</p>
+        </div>
+        <div class="receipt-details">
+          <div class="comapny-info">
+            <p> Dripp.</p>
+            <p> 120 Main St, Anytown, Maroc </p>
+            <p> +212544663322</p>
+          </div>
+          <div class="customer-info">
+            <p> {{ selectedOrder.customer.name }}</p>
+            <p> {{ selectedOrder.shippingAddress }}</p>
+            <p>{{ selectedOrder.phoneNumber }}</p>
+          </div>
+          
+        </div>
+        <div class="receipt-items">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of selectedOrder.items">
+                <td>{{ item.productName }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.amount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="total-amount">
+          <p>Total: {{ selectedOrder.totalAmount }}</p>
+          
+        </div>
+        <button class="print-btn"><i class="fa fa-print" aria-hidden="true"></i></button>
+      </div>
+      
+    
+    
+    
+</div>

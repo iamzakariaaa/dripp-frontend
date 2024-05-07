@@ -1,0 +1,27 @@
+<div class="store-container">
+    <h1>Welcome to Our Store!</h1>
+  
+    <div class="filters">
+      <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
+        <option value="All">All Categories</option>
+        <option *ngFor="let product of products" [value]="product.category">{{ product.category }}</option>
+      </select>
+      <div class="search">
+        <img src="assets/icons/search.png" alt="Search" class="search-icon">
+        <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="filterProducts()">
+    </div>
+    </div>
+  
+    <div class="product-grid">
+      <div class="product" *ngFor="let product of filteredProducts">
+        <img [src]="'assets/images/' + product.image" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <span>{{product.description}}</span>
+        <div class="cart">
+            <p>Price: ${{ product.price }}</p>
+            <button (click)="addToCart(product)">Add to Cart</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
