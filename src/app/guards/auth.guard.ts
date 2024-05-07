@@ -9,7 +9,7 @@ export const AuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   if (storageService.isLoggedIn()) {
     return true;
   } else {
-    router.navigate(['/login']);
+    router.navigate(['/auth']);
     return false;
   }
 };

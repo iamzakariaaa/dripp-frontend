@@ -1,5 +1,4 @@
 <div class="form-container">
-    <div class="image-container"></div>
     <form class="login-form" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
         <div class="form-group">
             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -10,7 +9,6 @@
             <input class="form-control" formControlName="password" placeholder="Password" type="password">
         </div>
         <button class="login-btn" type="submit">Login</button>
-        <a routerLink="/signup">You don't have an account? Sign Up</a>
     </form>
 </div>
 

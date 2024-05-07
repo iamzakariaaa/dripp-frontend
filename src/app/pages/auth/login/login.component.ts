@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { StorageService } from '../../services/storage.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StorageService } from '../../../services/storage.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
-      next: data => {
+      next: (data: any) => {
         this.storageService.saveToken(data);
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         console.log(this.role);
         this.redirect(this.role);
       },
-      error: err => {
+      error: (err: { status: number; }) => {
         if (err.status === 401) {
           this.errorMessage = 'Invalid email or password. Please try again.';
         } else {

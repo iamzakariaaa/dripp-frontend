@@ -1,27 +1,19 @@
 .form-container{
     display: flex;
     justify-content: center;
-    height: 600px;
-}
-
-
-.image-container {
-    flex: 1; 
-    background-image: url('streetwear2.jpg');
-    background-size: cover; 
-    background-position: center; 
+    height:  auto;
+    width: 500px;
     padding: 20px;
-    
 }
+
 .login-form{
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 100px;
+    padding: 10px;
     height: auto;
-    margin: 50px;
 
 }
   .form-group{
@@ -57,9 +49,3 @@
     background-color: #232a39;
     color: white;
   }
-
-a{
-  cursor: pointer;
-  text-decoration: none;
-  color: #232a39;
-}

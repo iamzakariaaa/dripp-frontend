@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { StoreComponent } from './pages/store/store.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { LoginComponent } from './pages/login/login.component';
-import { SignupComponent } from './pages/signup/signup.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrderComponent } from './pages/order/order.component';
@@ -15,6 +13,7 @@ import { ProductsComponent } from './admin/pages/products/products.component';
 import { OrdersComponent } from './admin/pages/orders/orders.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
+import { AuthComponent } from './pages/auth/auth.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,8 +22,7 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'order', component: OrderComponent },
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
+    { path: 'auth', component: AuthComponent },
     {path:'error',component:ForbiddenComponent},
     {
       path: 'admin',
@@ -45,6 +43,6 @@ export const routes: Routes = [
       ]
     },
     { path: 'profile', component: ProfileComponent },
-    { path: '**', redirectTo: 'home' } // Redirect any unknown paths to home
+    { path: '**', redirectTo: 'home' }
   ];
   

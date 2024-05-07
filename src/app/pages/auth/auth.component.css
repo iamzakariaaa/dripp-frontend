@@ -1,0 +1,21 @@
+.auth-container{
+    flex: 1;
+    padding: 100px;
+}
+h2{
+    margin: 0;
+    text-align: center;
+}
+.login,.signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+a{
+    cursor: pointer;
+    color: rgb(34, 119, 255);
+    
+}
+p{
+    margin: 0;
+}
