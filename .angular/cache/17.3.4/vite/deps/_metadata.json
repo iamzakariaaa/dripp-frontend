@@ -2,72 +2,72 @@
   "hash": "9d880b99",
   "configHash": "7172ef18",
   "lockfileHash": "207281d6",
-  "browserHash": "5bddff0b",
+  "browserHash": "c98c9a01",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "e089e2e6",
-      "needsInterop": false
-    },
-    "@angular/core": {
-      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
-      "file": "@angular_core.js",
-      "fileHash": "b0d0ff46",
-      "needsInterop": false
-    },
-    "@angular/forms": {
-      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
-      "file": "@angular_forms.js",
-      "fileHash": "bee2781b",
-      "needsInterop": false
-    },
-    "@angular/platform-browser": {
-      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
-      "file": "@angular_platform-browser.js",
-      "fileHash": "90a5aab1",
-      "needsInterop": false
-    },
-    "@angular/platform-browser/animations/async": {
-      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
-      "file": "@angular_platform-browser_animations_async.js",
-      "fileHash": "d1fc832d",
-      "needsInterop": false
-    },
-    "@angular/router": {
-      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
-      "file": "@angular_router.js",
-      "fileHash": "4ff7f983",
-      "needsInterop": false
-    },
-    "axios": {
-      "src": "../../../../../node_modules/axios/index.js",
-      "file": "axios.js",
-      "fileHash": "717058fb",
-      "needsInterop": false
-    },
-    "rxjs": {
-      "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
-      "file": "rxjs.js",
-      "fileHash": "f9bf6a22",
-      "needsInterop": false
-    },
-    "d3": {
-      "src": "../../../../../node_modules/d3/src/index.js",
-      "file": "d3.js",
-      "fileHash": "e28c423b",
+      "fileHash": "7fd39508",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "f33d83ac",
+      "fileHash": "e3fc0f2f",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "dbe8c6c8",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "d192b570",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "2d32a1c5",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations/async": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
+      "file": "@angular_platform-browser_animations_async.js",
+      "fileHash": "101bbea0",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "4b825cdd",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../../../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "8721cc04",
+      "needsInterop": false
+    },
+    "d3": {
+      "src": "../../../../../node_modules/d3/src/index.js",
+      "file": "d3.js",
+      "fileHash": "f0a6736c",
       "needsInterop": false
     },
     "jwt-decode": {
       "src": "../../../../../node_modules/jwt-decode/build/esm/index.js",
       "file": "jwt-decode.js",
-      "fileHash": "500016ce",
+      "fileHash": "175487d3",
+      "needsInterop": false
+    },
+    "rxjs": {
+      "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
+      "file": "rxjs.js",
+      "fileHash": "1845715c",
       "needsInterop": false
     }
   },

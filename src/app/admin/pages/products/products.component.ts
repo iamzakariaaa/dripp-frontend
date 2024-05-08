@@ -21,7 +21,7 @@ export class ProductsComponent implements OnInit{
   itemsPerPage: number = 5;
   totalPages: number = 0;
   productImageUrl: string | null = null;
-  private productSubscription: Subscription | undefined;
+  productSubscription: Subscription | undefined;
 
   constructor(
     private productService: ProductService,

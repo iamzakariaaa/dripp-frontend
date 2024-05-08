@@ -19,7 +19,6 @@ export class UsersComponent {
         id: 1,
         firstName: "John",
         lastName: "Doe",
-        username: "johndoe",
         email: "john@example.com",
         role: "ADMIN"
     },
@@ -27,7 +26,6 @@ export class UsersComponent {
         id: 2,
         firstName: "Jane",
         lastName: "Smith",
-        username: "janesmith",
         email: "jane@example.com",
         role: "CUSTOMER"
     },
@@ -35,7 +33,6 @@ export class UsersComponent {
         id: 3,
         firstName: "Alice",
         lastName: "Johnson",
-        username: "alicejohnson",
         email: "alice@example.com",
         role: "CUSTOMER"
     },
@@ -43,7 +40,6 @@ export class UsersComponent {
         id: 4,
         firstName: "Michael",
         lastName: "Brown",
-        username: "michaelbrown",
         email: "michael@example.com",
         role: "CUSTOMER"
     },
@@ -51,7 +47,6 @@ export class UsersComponent {
         id: 5,
         firstName: "Emily",
         lastName: "Davis",
-        username: "emilydavis",
         email: "emily@example.com",
         role: "CUSTOMER"
     },
@@ -59,7 +54,6 @@ export class UsersComponent {
         id: 6,
         firstName: "William",
         lastName: "Martinez",
-        username: "williammartinez",
         email: "william@example.com",
         role: "CUSTOMER"
     },
@@ -67,7 +61,6 @@ export class UsersComponent {
         id: 7,
         firstName: "Olivia",
         lastName: "Wilson",
-        username: "oliviawilson",
         email: "olivia@example.com",
         role: "CUSTOMER"
     },
@@ -75,7 +68,6 @@ export class UsersComponent {
         id: 8,
         firstName: "Ethan",
         lastName: "Anderson",
-        username: "ethananderson",
         email: "ethan@example.com",
         role: "CUSTOMER"
     }

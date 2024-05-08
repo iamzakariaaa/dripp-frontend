@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { Product } from '../models/product';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private baseUrl = 'http://localhost:8080/api/v1/products';
-  private token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBkcmlwLmNvbSIsInJvbGVzIjpbIkFETUlOIl0sImV4cCI6MTcxNDU5MzM1NSwiaWF0IjoxNzE0NTU3MzU1fQ.Z4UNPbgGGnj_9Idnd4Wl29r597LkYKzExk9GUQU1Btk';
-  constructor() { }
+  constructor(private storageService : StorageService) { }
 
+  token = this.storageService.getToken();
+  
   getAllProducts(): Observable<Product[]> {
     const headers = { Authorization: `Bearer ${this.token}` };
     return this.handleRequest(axios.get<Product[]>(`${this.baseUrl}`, {headers}));
