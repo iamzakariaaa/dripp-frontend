@@ -11,24 +11,29 @@ export class ProductService {
   private baseUrl = 'http://localhost:8080/api/v1/products';
   constructor(private storageService : StorageService) { }
 
-  token = this.storageService.getToken();
+ 
   
   getAllProducts(): Observable<Product[]> {
-    const headers = { Authorization: `Bearer ${this.token}` };
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     return this.handleRequest(axios.get<Product[]>(`${this.baseUrl}`, {headers}));
   }
 
   getProductById(id: number): Observable<Product> {
-    return this.handleRequest(axios.get<Product>(`${this.baseUrl}/${id}`));
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.handleRequest(axios.get<Product>(`${this.baseUrl}/${id}`, {headers}));
   }
 
   getProductImage(productId: number): Observable<any> {
-    const headers = { Authorization: `Bearer ${this.token}` };
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     return this.handleRequest(axios.get(`${this.baseUrl}/${productId}/image`, { headers, responseType: 'arraybuffer' }));
   }
   
   addProduct(productData: any, file: File): Observable<Product> {
-    const headers = { Authorization: `Bearer ${this.token}` };
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     const formData = new FormData();
     formData.append('file', file);
     formData.append('name', productData.name);
@@ -45,7 +50,8 @@ export class ProductService {
   }
 
   deleteProduct(id: number): Observable<void> {
-    const headers = { Authorization: `Bearer ${this.token}` };
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     return this.handleRequest(axios.delete<void>(`${this.baseUrl}/${id}`,{headers}));
   }
 

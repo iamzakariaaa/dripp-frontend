@@ -20,8 +20,8 @@ export class ProductsComponent implements OnInit{
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 0;
-  productImageUrl: string | null = null;
-  productSubscription: Subscription | undefined;
+  imageMap: Map<number, string> = new Map<number, string>();
+  productSubscription: Subscription | undefined ;
 
   constructor(
     private productService: ProductService,
@@ -40,14 +40,13 @@ export class ProductsComponent implements OnInit{
 
     this.loadProducts();
   }
-
+  
   loadProducts() {
     this.productSubscription = this.productService.getAllProducts().subscribe({
       next: (products: Product[]) => {
         this.products = products;
         this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
-  
-        // Fetch image for each product
+
         this.products.forEach(product => {
           this.fetchProductImage(product.id);
         });
@@ -58,17 +57,22 @@ export class ProductsComponent implements OnInit{
     });
   }
 
-  
+  getImageUrl(productId: number): string | undefined {
+    return this.imageMap.get(productId);
+  }
+
   fetchProductImage(productId: number): void {
-    this.productSubscription = this.productService.getProductImage(productId).subscribe({
+    this.productService.getProductImage(productId).subscribe({
       next: (imageData: any) => {
-        this.productImageUrl = URL.createObjectURL(new Blob([imageData], { type: 'image/png' }));
+        const imageUrl = URL.createObjectURL(new Blob([imageData], { type: 'image/png' }));
+        this.imageMap.set(productId, imageUrl);
       },
       error: (error: any) => {
         console.error('Error fetching product image:', error);
       }
     });
   }
+  
   
 
   addProduct() {

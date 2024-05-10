@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { StorageService } from './storage.service';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,8 @@ import { Subject } from 'rxjs';
 export class CartService {
   
   private cartUpdated = new Subject<void>();
-  constructor() { }
+  private baseUrl = 'http://localhost:8080/api/v1/products';
+  constructor(private storageService : StorageService) { }
 
   addToCart(product: any): void {
     let cartItems: any[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
@@ -58,4 +61,22 @@ export class CartService {
     this.cartUpdated.next();
   }
   
+  getProductImage(productId: number): Observable<any> {
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.handleRequest(axios.get(`${this.baseUrl}/${productId}/image`, { headers, responseType: 'arraybuffer' }));
+  }
+  
+  private handleRequest<T>(axiosPromise: Promise<AxiosResponse<T>>): Observable<T> {
+    return new Observable<T>(observer => {
+      axiosPromise
+        .then((response: AxiosResponse<T>) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error: AxiosError) => {
+          observer.error(`Error: ${error}`);
+        });
+    })
+  }
 }

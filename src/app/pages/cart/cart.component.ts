@@ -3,6 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 
 @Component({
     selector: 'app-cart',
@@ -14,12 +15,17 @@ import { RouterLink } from '@angular/router';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   totalPrice: number = 0;
-
-  constructor(private cartService: CartService) {}
+  imageMap: Map<number, string> = new Map<number, string>();
+  constructor(private cartService: CartService,private productService: ProductService) {}
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
     this.calculateTotalPrice();
+    this.cartItems.forEach(item => {
+      this.fetchProductImage(item.id);
+    });
+    console.log(this.cartItems)
+    console.log('Image Map Items:', this.imageMap);
   }
 
   updateQuantity(item: any): void {
@@ -41,6 +47,23 @@ export class CartComponent implements OnInit {
 
   calculateTotalPrice(): void {
     this.totalPrice = this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
+
+  getImageUrl(productId: number): string | undefined {
+    return this.imageMap.get(productId);
+  }
+
+
+  fetchProductImage(productId: number): void {
+    this.productService.getProductImage(productId).subscribe({
+      next: (imageData: any) => {
+        const imageUrl = URL.createObjectURL(new Blob([imageData], { type: 'image/png' }));
+        this.imageMap.set(productId, imageUrl);
+      },
+      error: (error: any) => {
+        console.error('Error fetching product image:', error);
+      }
+    });
   }
 }
 

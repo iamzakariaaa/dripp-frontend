@@ -37,9 +37,9 @@
       </div>
       <div *ngIf="dropdownOpen" class="dropdown-content">
         <div *ngFor="let item of orderItems" class="item-card">
-          <div class="item-image">
-            <img [src]="'assets/images/' + item.image" alt="Product Image">
-          </div>
+          <!-- <div class="item-image">
+            <img [src]="item.image" alt="Product Image">
+          </div> -->
           <div class="item-details">
             <h4>{{ item.name }}</h4>
             <span>{{ item.description }}</span>
@@ -49,7 +49,7 @@
       </div>
       <div class="pricing">
         <p>Shipping Price: ${{ shippingPrice }}</p>
-        <hr>
+        
         <p>Total Price: ${{ totalPrice + shippingPrice }}</p>
       </div>
     </div>

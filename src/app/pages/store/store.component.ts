@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
+import { Product } from '../../models/product';
+import { Subscription } from 'rxjs';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
@@ -11,20 +14,51 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './store.component.html',
   styleUrl: './store.component.css'
 })
-export class StoreComponent {
-  products = [
-    { id: 1, name: 'Product 1', price: 30, description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia eligendi fuga animi sed non placeat perspiciatis adipisci sit distinctio',category: 'HOODIE', image: 'hoodie.png' },
-    { id: 2, name: 'Product 2', price: 55, description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia eligendi fuga animi sed non placeat perspiciatis adipisci sit distinctio',category: 'JACKET', image: 'jacket.png' },
-    { id: 3, name: 'Product 3', price: 25, description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia eligendi fuga animi sed non placeat perspiciatis adipisci sit distinctio',category: 'SHIRT', image: 'shirt.png' },
-    { id: 4, name: 'Product 4', price: 48, description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia eligendi fuga animi sed non placeat perspiciatis adipisci sit distinctio',category: 'SNEAKER', image: 'sneaker.png' },
-    { id: 5, name: 'Product 5', price: 30, description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia eligendi fuga animi sed non placeat perspiciatis adipisci sit distinctio',category: 'PANT', image: 'pant.png' },
-  ];
-
-  filteredProducts = this.products;
+export class StoreComponent implements OnInit{
+  products: Product[] = [];
+  imageMap: Map<number, string> = new Map<number, string>();
+  productSubscription: Subscription | undefined;
+  filteredProducts : Product[] = [];
   selectedCategory = 'All';
   searchText = '';
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService,  private productService: ProductService) {}
+  
+  ngOnInit() {
+    this.loadProducts();
+  }
+  
+  loadProducts() {
+    this.productSubscription = this.productService.getAllProducts().subscribe({
+      next: (products: Product[]) => {
+        this.products = products;
+        this.filteredProducts = [...this.products];
+        this.products.forEach(product => {
+          this.fetchProductImage(product.id);
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
+  }
+
+  getImageUrl(productId: number): string | undefined {
+    return this.imageMap.get(productId);
+  }
+
+  fetchProductImage(productId: number): void {
+    this.productService.getProductImage(productId).subscribe({
+      next: (imageData: any) => {
+        const imageUrl = URL.createObjectURL(new Blob([imageData], { type: 'image/png' }));
+        this.imageMap.set(productId, imageUrl);
+      },
+      error: (error: any) => {
+        console.error('Error fetching product image:', error);
+      }
+    });
+  }
+  
 
   filterProducts() {
     this.filteredProducts = this.products.filter(product => {
