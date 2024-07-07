@@ -3,7 +3,7 @@
   }
   
   .filters {
-    margin: 10px;
+    margin: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,20 +52,31 @@
   .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+    
+    padding: 20px;
   }
   
   .product {
-    border: 1px solid #ccc;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f3f3f3;
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px;
+    width: 250px;
   }
   
   .product img {
-    max-width: 100%;
-    background-color: #d7d7d7;
+    align-self: center;
+    max-width: 200px;
   }
-
+.fa-heart-o{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
   .product span {
     text-align: start;
     color: #676767;
@@ -76,11 +87,11 @@
     margin-top: 10px;
     button {
         cursor: pointer;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        font-size: 16px;
-        background-color: #dfdfdf; 
+        border: none;    
+        border-radius: 25px;   
+        padding: 0 10px 0 10px;
+        font-size: 14px;
+        background-color: transparent; 
         transition: background-color 0.3s;
     }
     button:hover{

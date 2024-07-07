@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order';
 import { StorageService } from './storage.service';
+import handleRequest from '../helpers/handleRequest';
+import { ItemService } from './item.service';
+import { Item } from '../models/item';
+import { OrderDTO } from '../models/order.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -10,34 +14,24 @@ import { StorageService } from './storage.service';
 export class OrderService {
   
   private baseUrl = 'http://localhost:8080/api/v1/orders';
-  constructor(private storageService : StorageService) { }
+  constructor(private storageService : StorageService, private itemService: ItemService) { }
   token = this.storageService.getToken();
   
-  getAllOrders(): Observable<Order[]> {
+  getAllOrders(): Observable<OrderDTO[]> {
     const headers = { Authorization: `Bearer ${this.token}` };
-    return this.handleRequest(axios.get<Order[]>(`${this.baseUrl}`, {headers}));
+    return handleRequest(axios.get<OrderDTO[]>(`${this.baseUrl}`, {headers}));
   }
 
   getOrderById(id: number): Observable<Order> {
-    return this.handleRequest(axios.get<Order>(`${this.baseUrl}/${id}`));
+    return handleRequest(axios.get<Order>(`${this.baseUrl}/${id}`));
   }
 
   addOrder(order: Order): Observable<Order> {
     const headers = { Authorization: `Bearer ${this.token}` };
-    return this.handleRequest(axios.post<Order>(`${this.baseUrl}`, order, { headers }));
+    return handleRequest(axios.post<Order>(`${this.baseUrl}`, order, { headers }));
   }
-
-  
-  private handleRequest<T>(axiosPromise: Promise<AxiosResponse<T>>): Observable<T> {
-    return new Observable<T>(observer => {
-      axiosPromise
-        .then((response: AxiosResponse<T>) => {
-          observer.next(response.data);
-          observer.complete();
-        })
-        .catch((error: AxiosError) => {
-          observer.error(`Error: ${error}`);
-        });
-    })
+  assignItemToOrder(orderId: number, orderItem: Item): Observable<Item> {
+    orderItem.order = { id: orderId } as Order;  
+    return this.itemService.addItem(orderItem);
   }
 }

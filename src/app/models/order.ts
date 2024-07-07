@@ -1,12 +1,13 @@
 import { Item } from "./item";
+import { User } from "./user";
 
 export interface Order{
     id:number;
     createdAt:Date;
-    shippingAddress: string;
+    address: string;
     phoneNumber:string;
     status:string;
     totalAmount:number;
-    customer: { id: number; name: string }; 
+    customer: User | undefined; 
     items: Item[];
 }

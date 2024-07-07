@@ -12,20 +12,27 @@ export class CartService {
   private cartUpdated = new Subject<void>();
   private baseUrl = 'http://localhost:8080/api/v1/products';
   constructor(private storageService : StorageService) { }
-
+ 
   addToCart(product: any): void {
     let cartItems: any[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
     const existingItem = cartItems.find(item => item.id === product.id);
 
     if (existingItem) {
       existingItem.quantity++;
+      existingItem.amount = existingItem.quantity * product.price; 
     } else {
-      cartItems.push({ ...product, quantity: 1 });
+      cartItems.push({
+        id: product.id,
+        product: { ...product },
+        quantity: 1,
+        amount: product.price 
+      });
     }
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     this.cartUpdated.next();
-  }
+}
+
 
   getCartItems(): any[] {
     return JSON.parse(localStorage.getItem('cartItems') || '[]');

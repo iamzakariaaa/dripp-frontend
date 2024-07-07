@@ -1,11 +1,10 @@
 <div class="navbar">
   <div class="brand">
-    <span class="brand-name">Dripp.</span>
+    <img src="../../../assets/dripp.png" alt="Logo" class="brand-name">
   </div>   
   <div class="links">
     <a routerLink="/home">Home</a>
     <a routerLink="/store">Store</a>
-    <a href="#">Contact</a>
   </div>
   <div class="container">      
     <div class="user" *ngIf="isLoggedIn(); else loginLink" (click)="toggleDropdown()">
@@ -24,12 +23,12 @@
       <img src="../../../assets/icons/user.png" alt="User" class="user-img">
       
     </div>
-    <ng-template #loginLink>
-      <a routerLink="/auth" class="login-link">Login</a>
+    <ng-template #loginLink>     
       <a routerLink="/cart" class="cart-link">
         <img src="../../../assets/icons/cart.png" alt="Cart" class="cart-img">
         <span class="cart-count">{{ getTotalCartItemCount() }}</span>
       </a>
+      <a routerLink="/auth" class="login-link">Login</a>
     </ng-template>
   </div>
 </div>

@@ -14,6 +14,7 @@
   
     <div class="product-grid">
       <div class="product" *ngFor="let product of filteredProducts">
+        <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
         <img [src]="getImageUrl(product.id)" alt="{{ product.name }}">
         <h3>{{ product.name }}</h3>
         <span>{{product.description}}</span>

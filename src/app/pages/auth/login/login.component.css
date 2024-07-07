@@ -1,7 +1,6 @@
 .form-container{
     display: flex;
     justify-content: center;
-    height:  auto;
     width: 500px;
     padding: 20px;
 }
@@ -19,31 +18,47 @@
   .form-group{
     display: flex;
     align-items: center;
-    padding: 10px 5px 10px 5px;
-    background-color: white;
-    border: 3px solid #ccc;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin: 10px;
+    justify-content: center;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 0 5px 0 5px;
+    margin: 5px;
     width: 100%;
+    background-color: #ffffff;
+   
   }
-  .form-control{
+  .form-group i {
+    font-size: 20px;
+    color: #424242;
+    margin: 5px;
+  }
+  
+ 
+  .form-control{  
+    width: 100%;
+    padding: 10px;  
+    margin: 5px;
     border: none;
-    margin-left: 10px;
-    width: 100%;
-    padding: 5px;
+    background-color: transparent;
+    font-size: medium;
+    font-family: 'Anuphan';
   }
+
   .form-control:focus{
     outline: none;
   }
+  
   .login-btn{
     margin: 10px;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     cursor: pointer;
     transition: 0.5s ease;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+    font-size: medium;
+    font-family: 'Anuphan';
   }
   .login-btn:hover{
     background-color: #232a39;
