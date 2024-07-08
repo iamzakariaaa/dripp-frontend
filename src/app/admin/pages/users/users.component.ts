@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../../models/user';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -10,69 +12,30 @@ import { User } from '../../../models/user';
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit{
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 0;
-  users: User[] = [
-    {
-        id: 1,
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@example.com",
-        role: "ADMIN"
-    },
-    {
-        id: 2,
-        firstName: "Jane",
-        lastName: "Smith",
-        email: "jane@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 3,
-        firstName: "Alice",
-        lastName: "Johnson",
-        email: "alice@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 4,
-        firstName: "Michael",
-        lastName: "Brown",
-        email: "michael@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 5,
-        firstName: "Emily",
-        lastName: "Davis",
-        email: "emily@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 6,
-        firstName: "William",
-        lastName: "Martinez",
-        email: "william@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 7,
-        firstName: "Olivia",
-        lastName: "Wilson",
-        email: "olivia@example.com",
-        role: "CUSTOMER"
-    },
-    {
-        id: 8,
-        firstName: "Ethan",
-        lastName: "Anderson",
-        email: "ethan@example.com",
-        role: "CUSTOMER"
-    }
-];
+  userSubscription: Subscription | undefined;
+  users: User[] = [];
 
+constructor(private userService: UserService) {}
+  
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+loadUsers() {
+  this.userSubscription = this.userService.getAllUsers().subscribe({
+    next: (users: User[]) => {
+      this.users = users;
+      console.error('fetched users:', users);
+    },
+    error: (error) => {
+      console.error('Error fetching users:', error);
+    }
+  });
+}
 
    // Pagination logic to get the users for the current page
    getPaginatedUsers(): any[] {
