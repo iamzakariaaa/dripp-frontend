@@ -6,12 +6,27 @@
         <option value="All">All Categories</option>
         <option *ngFor="let product of products" [value]="product.category">{{ product.category }}</option>
       </select>
-      <div class="search">
-        <img src="assets/icons/search.png" alt="Search" class="search-icon">
-        <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="filterProducts()">
+      <div class="search-sort">
+        <div class="search">
+          <img src="assets/icons/search.png" alt="Search" class="search-icon">
+          <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="filterProducts()">
+        </div>
+        <button class="sort-btn" (click)="toggleSortModal()"><i class="fa fa-sliders fa-lg" aria-hidden="true"></i></button>
+      </div>   
+      <div class="modal" *ngIf="isSortModalVisible">
+        <div class="modal-content">
+          <span class="close" (click)="toggleSortModal()">&times;</span>
+          <button class="sort-option" (click)="sortProducts('name', 'asc')"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>Sort By Name (Ascending)</button>
+          
+          <button class="sort-option" (click)="sortProducts('name', 'desc')"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>Sort By Name (Descending)</button>
+          
+          <button class="sort-option" (click)="sortProducts('price', 'asc')"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i>Sort By Price (Ascending)</button>
+          
+          <button class="sort-option" (click)="sortProducts('price', 'desc')"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i>Sort By Price (Descending)</button>
+        </div>
+      </div>  
     </div>
-    </div>
-  
+    
     <div class="product-grid">
       <div class="product" *ngFor="let product of filteredProducts">
         <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>

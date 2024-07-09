@@ -21,6 +21,7 @@ export class StoreComponent implements OnInit{
   filteredProducts : Product[] = [];
   selectedCategory = 'All';
   searchText = '';
+  isSortModalVisible = false;
 
   constructor(private cartService: CartService,  private productService: ProductService) {}
   
@@ -68,6 +69,26 @@ export class StoreComponent implements OnInit{
     });
   }
 
+  sortProducts(property: keyof Product, order: 'asc' | 'desc') {
+    this.filteredProducts.sort((a, b) => {
+      let comparison = 0;
+      
+      if (a[property] > b[property]) {
+        comparison = 1;
+      } else if (a[property] < b[property]) {
+        comparison = -1;
+      }
+      
+      return order === 'asc' ? comparison : -comparison;
+    });
+    this.toggleSortModal(); // Close modal after sorting
+  }
+  
+
+  toggleSortModal() {
+    this.isSortModalVisible = !this.isSortModalVisible;
+  }
+  
   addToCart(product: any): void {
     this.cartService.addToCart(product);
   }
