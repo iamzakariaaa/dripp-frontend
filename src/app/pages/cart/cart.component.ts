@@ -31,6 +31,18 @@ export class CartComponent implements OnInit {
     console.log('Image Map Items:', this.imageMap);
   }
 
+  increaseQuantity(item: any): void {
+    item.quantity++;
+    this.updateQuantity(item);
+}
+
+decreaseQuantity(item: any): void  {
+    if (item.quantity > 1) {
+        item.quantity--;
+        this.updateQuantity(item);
+    }
+}
+
   updateQuantity(item: any): void {
     this.cartService.updateCartItem(item);
     this.calculateSubTotal();

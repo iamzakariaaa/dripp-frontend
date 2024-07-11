@@ -16,10 +16,15 @@
                 <p class="price">${{ item.amount }}</p>
               </div>
               <p class="description">{{ item.product.description }}</p>             
-              <div class="quantity">               
-                <button (click)="deleteItem(item)" class="delete-btn"><i class="fa fa-trash-o"></i></button>                          
-                <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item)" class="quantity-control">                                           
-              </div>                     
+              <div class="item-set">
+                <button (click)="deleteItem(item)" class="delete-btn"><i class="fa fa-trash-o"></i></button>               
+                <div class="quantity">
+                  <button (click)="increaseQuantity(item)" class="quantity-btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                  <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item)" class="quantity-control">
+                  <button (click)="decreaseQuantity(item)" class="quantity-btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                </div>
+                
+            </div>                    
           </div>                            
       </div>
     </div>

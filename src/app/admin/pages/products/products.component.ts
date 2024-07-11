@@ -1,52 +1,76 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit{
-  productForm: FormGroup = this.formBuilder.group({});
+export class ProductsComponent implements OnInit, OnDestroy {
+  productForm: FormGroup;
   selectedFile: File | undefined;
   products: Product[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  totalPages: number = 0;
-  imageMap: Map<number, string> = new Map<number, string>();
-  productSubscription: Subscription | undefined ;
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 0;
+  imageMap = new Map<number, string>();
+  productSubscription: Subscription | undefined;
+  isEditMode = false;
+  selectedProduct: Product | null = null;
 
   constructor(
     private productService: ProductService,
     private formBuilder: FormBuilder
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.productForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
       category: ['', Validators.required],
       units: ['', Validators.required],
-      image: [null, Validators.required]
     });
+  }
 
+  ngOnInit(): void {
     this.loadProducts();
+   
+  }
+ 
+  ngOnDestroy(): void {
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();
+    }
+  }
+
+  onSubmit(): void {
+    if (this.productForm.valid) {
+      const formValue = this.productForm.value;
+      if (this.isEditMode && this.selectedProduct) {
+        const updatedProduct: Product = {
+          ...this.selectedProduct,
+          ...formValue
+        };
+        this.updateProduct(updatedProduct);
+      } else {
+        this.addProduct();
+      }
+    }
   }
   
-  loadProducts() {
+  
+
+  loadProducts(): void {
     this.productSubscription = this.productService.getAllProducts().subscribe({
       next: (products: Product[]) => {
         this.products = products;
         this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
-
         this.products.forEach(product => {
           this.fetchProductImage(product.id);
         });
@@ -72,66 +96,142 @@ export class ProductsComponent implements OnInit{
       }
     });
   }
-  
-  
 
-  addProduct() {
+  addProduct(): void {
     if (!this.selectedFile) {
-      console.error('No file selected.');
+      Swal.fire({
+        icon: 'error',
+        title: 'No file selected',
+        text: 'Please select a file to upload.'
+      });
       return;
     }
     const productData = this.productForm.value;
     this.productSubscription = this.productService.addProduct(productData, this.selectedFile).subscribe({
       next: (data: Product) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Product Added',
+          text: 'Product added successfully!'
+        });
         console.log('Product added successfully:', data);
         this.loadProducts();
+        this.resetForm();
       },
       error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error Adding Product',
+          text: 'There was an error adding the product. Please try again.'
+        });
         console.error('Error adding product:', error);
       }
     });
   }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    this.productForm.patchValue({ image: file });
+  }
+
   
-  updateProduct(product: Product) {
-    const productData = this.productForm.value;
-    const id = product.id; 
-    this.productSubscription = this.productService.updateProduct(id, productData).subscribe({
-      next: (data: Product) => {
-        console.log('Product updated successfully:', data);
+
+  updateProduct(product: Product): void {
+    const id = product.id;
+    console.log('Updating product with data:', product);
+  
+    this.productSubscription = this.productService.updateProduct(id, product).subscribe({
+      next: (updatedProduct: Product) => {
+        console.log('Product updated successfully:', updatedProduct);
+  
+        Swal.fire({
+          icon: 'success',
+          title: 'Product Updated',
+          text: 'Product updated successfully!'
+        });
+  
         this.loadProducts();
+        this.resetForm();
       },
       error: (error) => {
         console.error('Error updating product:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error Updating Product',
+          text: 'There was an error updating the product. Please try again.'
+        });
       }
     });
   }
   
+  
+  
+  resetForm() {
+    this.isEditMode = false;
+    this.selectedProduct = null;
+    this.productForm.reset();
+  }
+  
+  
+  deleteProduct(id: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productSubscription = this.productService.deleteProduct(id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Deleted!',
+              'Product has been deleted.',
+              'success'
+            );
+            console.log('Product deleted successfully');
+            this.loadProducts();
+          },
+          error: (error) => {
+            Swal.fire(
+              'Error!',
+              'There was an error deleting the product. Please try again.',
+              'error'
+            );
+            console.error('Error deleting product:', error);
+          }
+        });
+      }
+    });
+  }
 
-  deleteProduct(id: number) {
-    this.productSubscription = this.productService.deleteProduct(id).subscribe({
-      next: () => {
-        console.log('Product deleted successfully');
-        this.loadProducts();
-      },
-      error: (error) => {
-        console.error('Error deleting product:', error);
-      }
-    });
+  editProduct(product: Product) {
+    this.isEditMode = true;
+    this.selectedProduct = product;
+    this.productForm.patchValue({
+      name: this.selectedProduct.name,
+      description: this.selectedProduct.description,
+      price: this.selectedProduct.price,
+      category: this.selectedProduct.category,
+      units: this.selectedProduct.units,
+    })
+    console.log('Product being edited:', product);
+    
   }
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
-  
+
+
 
   // Pagination logic to get the products for the current page
-  getPaginatedProducts(): any[] {
+  getPaginatedProducts(): Product[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.products.slice(startIndex, endIndex);
   }
 
   // Function to go to the next page
-  nextPage() {
+  nextPage(): void {
     const totalPages = Math.ceil(this.products.length / this.itemsPerPage);
     if (this.currentPage < totalPages) {
       this.currentPage++;
@@ -139,22 +239,24 @@ export class ProductsComponent implements OnInit{
   }
 
   // Function to go to the previous page
-  prevPage() {
+  prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
   // Function to jump to a specific page
-  goToPage(pageNumber: number) {
+  goToPage(pageNumber: number): void {
     const totalPages = Math.ceil(this.products.length / this.itemsPerPage);
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       this.currentPage = pageNumber;
     }
   }
+
   getTotalPages(): number {
     return Math.ceil(this.products.length / this.itemsPerPage);
   }
+
   getPageNumbers(): number[] {
     const totalPages = this.getTotalPages();
     return Array(totalPages).fill(0).map((x, i) => i + 1);

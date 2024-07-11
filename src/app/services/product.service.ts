@@ -15,9 +15,9 @@ export class ProductService {
 
   
   getAllProducts(): Observable<Product[]> {
-    const token = this.storageService.getToken();
-    const headers = { Authorization: `Bearer ${token}` };
-    return handleRequest(axios.get<Product[]>(`${this.baseUrl}`, {headers}));
+    /* const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` }; */
+    return handleRequest(axios.get<Product[]>(`${this.baseUrl}` /* , {headers}  */));
   }
 
   getProductById(id: number): Observable<Product> {
@@ -27,9 +27,9 @@ export class ProductService {
   }
 
   getProductImage(productId: number): Observable<any> {
-    const token = this.storageService.getToken();
-    const headers = { Authorization: `Bearer ${token}` };
-    return handleRequest(axios.get(`${this.baseUrl}/${productId}/image`, { headers, responseType: 'arraybuffer' }));
+    /* const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };  */
+    return handleRequest(axios.get(`${this.baseUrl}/${productId}/image`, {  /* headers, */  responseType: 'arraybuffer' }));
   }
   
   addProduct(productData: any, file: File): Observable<Product> {
@@ -47,8 +47,11 @@ export class ProductService {
   }
 
   updateProduct(id: number, productData: any): Observable<Product> {
-    return handleRequest(axios.put<Product>(`${this.baseUrl}/${id}`, productData));
+    const token = this.storageService.getToken();
+    const headers = { Authorization: `Bearer ${token}` }; 
+    return handleRequest(axios.put<Product>(`${this.baseUrl}/${id}`, productData ,{headers}));
   }
+  
 
   deleteProduct(id: number): Observable<void> {
     const token = this.storageService.getToken();
